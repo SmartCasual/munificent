@@ -2,18 +2,16 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.4
-  node: circleci/node@5.0.2
-  browser-tools: circleci/browser-tools@1.2
 
 jobs:
   test: # our next job, called "test"
     docker:
-      - image: cimg/ruby:3.1.2-browsers # this is our primary docker image, where step commands run.
+      - image: cimg/ruby:3.1.2 # this is our primary docker image, where step commands run.
       - image: cimg/redis:6.2
       - image: cimg/postgres:13.5
         environment: # add POSTGRES environment variables.
           POSTGRES_USER: circleci
-          POSTGRES_DB: jingle_jam_test
+          POSTGRES_DB: munificent_test
           POSTGRES_PASSWORD: ""
           POSTGRES_HOST_AUTH_METHOD: trust
     # environment variables specific to Ruby/Rails, applied to the primary container.
@@ -22,7 +20,6 @@ jobs:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
       CI: true
-      FROM_EMAIL_ADDRESS: "jingle-jam@example.com"
       HMAC_SECRET: "c360bcae-df63-4616-808a-860f03d7da6b"
       PAYPAL_API_ENDPOINT: "https://api.paypal.example.com"
       PAYPAL_CLIENT_ID: "AakBwrFPLdPU4-oKX939jxpGlL-0_J9E10z1dSapKjp2G-o8pte9OjKw8bBl\
@@ -39,22 +36,8 @@ jobs:
       TWITCH_CLIENT_ID: "abcde"
       TWITCH_CLIENT_SECRET: "abcde"
     steps:
-      - node/install:
-          node-version: '16.14'
-          install-yarn: true
-      - browser-tools/install-chrome:
-          replace-existing: true
-      - browser-tools/install-chromedriver
-      - run:
-          name: Check install
-          command: |
-            google-chrome --version
-            chromedriver --version
       - checkout
       - ruby/install-deps
-      - node/install-packages:
-          pkg-manager: yarn
-          with-cache: true
       # Here we make sure that the secondary container boots
       # up before we run operations on the database.
       - run:

@@ -1,13 +1,11 @@
-FactoryBot.define do
-  factory :key do
-    code { SecureRandom.uuid }
-    game
-    donator_bundle_tier { nil }
+Munificent::Factories.define :key do
+  code { SecureRandom.uuid }
+  game
+  donator_bundle_tier { nil }
 
-    trait :unassigned
+  trait :unassigned
 
-    trait :assigned do
-      donator_bundle_tier
-    end
+  trait :assigned do
+    donator_bundle_tier
   end
 end

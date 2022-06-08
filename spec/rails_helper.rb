@@ -2,10 +2,10 @@
 require "spec_helper"
 
 ENV["RAILS_ENV"] ||= "test"
-ENV["OTP_ISSUER"] = "Jingle Jam (test)"
 ENV["PAYPAL_API_ENDPOINT"] = "https://api.paypal.example.com"
+ENV["RAILS_ROOT"] = File.expand_path("test/dummy", __dir__)
 
-require File.expand_path("../config/environment", __dir__)
+require File.expand_path("../test/dummy/config/environment", __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
@@ -17,7 +17,7 @@ require_relative "../test/support/test_data"
 require_relative "../test/support/with_env"
 require_relative "../test/support/with_key_assignment_processor"
 
-FactoryBot.find_definitions
+require "paypal/rest"
 
 require "webmock/rspec"
 WebMock.disable_net_connect!(allow_localhost: true)
@@ -36,6 +36,7 @@ Sidekiq::Testing.inline!
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove these lines.
 begin
+  ActiveRecord::Migrator.migrations_paths = [Rails.root.join("db/migrate").to_s]
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
@@ -86,9 +87,9 @@ RSpec.configure do |config|
 
   config.around do |example|
     TestData.clear
-    KeyAssignment::RequestProcessor.clear_all_queues
+    Munificent::KeyAssignment::RequestProcessor.clear_all_queues
     example.run
-    KeyAssignment::RequestProcessor.clear_all_queues
+    Munificent::KeyAssignment::RequestProcessor.clear_all_queues
     TestData.clear
   end
 

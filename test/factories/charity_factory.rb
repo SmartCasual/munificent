@@ -1,5 +1,3 @@
-FactoryBot.define do
-  factory :charity do
-    sequence(:name) { |n| "Charity #{n}" }
-  end
+Munificent::Factories.define :charity do
+  sequence(:name) { |n| "Charity #{n}" }
 end

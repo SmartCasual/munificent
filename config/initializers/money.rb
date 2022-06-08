@@ -1,3 +1,5 @@
+require "monetize"
+require "money-rails"
 MoneyRails.configure do |config|
   # To set the default currency
   #
@@ -135,19 +137,4 @@ MoneyRails.configure do |config|
 
   Monetize.assume_from_symbol = true
 end
-
-if Module.const_defined?("ActiveAdmin::Views::ActiveAdminForm")
-  class ActiveAdmin::Views::ActiveAdminForm
-    def money(method, **kwargs)
-      input(method, as: :money, **kwargs)
-    end
-  end
-end
-
-if Module.const_defined?("ActiveAdmin::FormBuilder")
-  class ActiveAdmin::FormBuilder
-    def money(method, **kwargs)
-      input(method, as: :money, **kwargs)
-    end
-  end
-end
+MoneyRails::Hooks.init

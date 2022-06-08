@@ -1,7 +1,0 @@
-<h1><%= t("donations.header") %></h1>
-
-<h2>Your donations</h2>
-<%= render "donations/donations_block", donations: current_donator.donations %>
-
-<h2>All donations</h2>
-<%= render "donations/donations_block", donations:  Donation.all %>
