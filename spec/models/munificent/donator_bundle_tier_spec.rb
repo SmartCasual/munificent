@@ -1,6 +1,6 @@
 RSpec.describe Munificent::DonatorBundleTier, type: :model do
   let(:donator_bundle) do
-    Munificent::DonatorBundle.create_from(create("munificent_bundle", :tiered), donator: create("munificent_donator"))
+    Munificent::DonatorBundle.create_from(create(:bundle, :tiered), donator: create(:donator))
   end
 
   describe "triggering bundle fulfillment" do
@@ -53,11 +53,11 @@ RSpec.describe Munificent::DonatorBundleTier, type: :model do
   end
 
   describe ".unfulfilled" do
-    let(:game_1) { create("munificent_game") }
-    let(:game_2) { create("munificent_game") }
+    let(:game_1) { create(:game) }
+    let(:game_2) { create(:game) }
 
     let(:bundle_tier) do
-      create("munificent_bundle_tier",
+      create(:bundle_tier,
         bundle_tier_games: [
           build("munificent_bundle_tier_game", game: game_1),
           build("munificent_bundle_tier_game", game: game_2),
@@ -65,7 +65,7 @@ RSpec.describe Munificent::DonatorBundleTier, type: :model do
       )
     end
 
-    let!(:donator_bundle_tier) { create("munificent_donator_bundle_tier", bundle_tier:) }
+    let!(:donator_bundle_tier) { create(:donator_bundle_tier, bundle_tier:) }
 
     context "when a donator bundle tier has no keys assigned" do
       it "returns the donator bundle tier" do
@@ -75,7 +75,7 @@ RSpec.describe Munificent::DonatorBundleTier, type: :model do
 
     context "when a donator bundle tier has some keys assigned" do
       before do
-        create("munificent_key", game: game_1, donator_bundle_tier:)
+        create(:key, game: game_1, donator_bundle_tier:)
       end
 
       it "returns the donator bundle tier" do
@@ -85,8 +85,8 @@ RSpec.describe Munificent::DonatorBundleTier, type: :model do
 
     context "when a donator bundle tier has all keys assigned" do
       before do
-        create("munificent_key", game: game_1, donator_bundle_tier:)
-        create("munificent_key", game: game_2, donator_bundle_tier:)
+        create(:key, game: game_1, donator_bundle_tier:)
+        create(:key, game: game_2, donator_bundle_tier:)
       end
 
       it "does not return the donator bundle tier" do
@@ -96,11 +96,11 @@ RSpec.describe Munificent::DonatorBundleTier, type: :model do
   end
 
   describe ".for_fundraiser(fundraiser)" do
-    let(:fundraiser) { create("munificent_fundraiser") }
+    let(:fundraiser) { create(:fundraiser) }
 
-    let(:bundle) { create("munificent_bundle", bundle_tiers: [], fundraiser: bundle_fundraiser) }
-    let(:bundle_tier) { create("munificent_bundle_tier", :empty, bundle:) }
-    let!(:donator_bundle_tier) { create("munificent_donator_bundle_tier", bundle_tier:) }
+    let(:bundle) { create(:bundle, bundle_tiers: [], fundraiser: bundle_fundraiser) }
+    let(:bundle_tier) { create(:bundle_tier, :empty, bundle:) }
+    let!(:donator_bundle_tier) { create(:donator_bundle_tier, bundle_tier:) }
 
     context "when the bundle is associated with the fundraiser" do
       let(:bundle_fundraiser) { fundraiser }
@@ -111,7 +111,7 @@ RSpec.describe Munificent::DonatorBundleTier, type: :model do
     end
 
     context "when the bundle is associated with a different fundraiser" do
-      let(:bundle_fundraiser) { create("munificent_fundraiser") }
+      let(:bundle_fundraiser) { create(:fundraiser) }
 
       it "does not return the donator bundle tier" do
         expect(described_class.for_fundraiser(fundraiser)).to be_empty
@@ -121,19 +121,19 @@ RSpec.describe Munificent::DonatorBundleTier, type: :model do
 
   describe ".oldest_first" do
     let(:donator_bundle_tier_1) do
-      create("munificent_donator_bundle_tier",
+      create(:donator_bundle_tier,
         created_at: 1.day.ago,
         updated_at: 1.minute.ago,
       )
     end
     let(:donator_bundle_tier_2) do
-      create("munificent_donator_bundle_tier",
+      create(:donator_bundle_tier,
         created_at: 2.days.ago,
         updated_at: 20.minutes.ago,
       )
     end
     let(:donator_bundle_tier_3) do
-      create("munificent_donator_bundle_tier",
+      create(:donator_bundle_tier,
         created_at: 10.seconds.ago,
         updated_at: 10.seconds.ago,
       )

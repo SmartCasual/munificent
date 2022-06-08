@@ -6,19 +6,19 @@ RSpec.describe Munificent::KeyAssignment::RequestProcessor do
   end
 
   describe "on startup" do
-    let(:bundle_tier) { create("munificent_bundle_tier", :without_keys) }
+    let(:bundle_tier) { create(:bundle_tier, :without_keys) }
 
     let!(:old_unfulfilled_unlocked_tier) do
-      create("munificent_donator_bundle_tier", :unfulfilled, :unlocked,
+      create(:donator_bundle_tier, :unfulfilled, :unlocked,
         bundle_tier:,
         updated_at: 2.hours.ago,
       )
     end
 
     before do
-      create("munificent_donator_bundle_tier", :fulfilled, bundle_tier:)
-      create("munificent_donator_bundle_tier", :unfulfilled, :locked, bundle_tier:)
-      create("munificent_donator_bundle_tier", :unfulfilled, :unlocked,
+      create(:donator_bundle_tier, :fulfilled, bundle_tier:)
+      create(:donator_bundle_tier, :unfulfilled, :locked, bundle_tier:)
+      create(:donator_bundle_tier, :unfulfilled, :unlocked,
         bundle_tier:,
         updated_at: 1.second.ago,
       )
@@ -27,7 +27,7 @@ RSpec.describe Munificent::KeyAssignment::RequestProcessor do
     it "assigns keys to all unfulfilled unlocked tiers in oldest first order" do
       Munificent::Key.unassigned.destroy_all
 
-      key = create("munificent_key", game: bundle_tier.games.first)
+      key = create(:key, game: bundle_tier.games.first)
       expect(key.reload.donator_bundle_tier).to be_nil
 
       described_class.clear_all_queues
@@ -43,11 +43,11 @@ RSpec.describe Munificent::KeyAssignment::RequestProcessor do
   end
 
   describe ".queue_fulfillment(donator_bundle_tier)" do
-    let(:donator_bundle_tier) { create("munificent_donator_bundle_tier", :unfulfilled, :unlocked) }
+    let(:donator_bundle_tier) { create(:donator_bundle_tier, :unfulfilled, :unlocked) }
 
     before do
       donator_bundle_tier.bundle_tier.games.each do |game|
-        create("munificent_key", :unassigned, game:)
+        create(:key, :unassigned, game:)
       end
     end
 

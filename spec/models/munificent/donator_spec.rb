@@ -1,19 +1,19 @@
 RSpec.describe Munificent::Donator do
-  subject(:donator) { create("munificent_donator") }
+  subject(:donator) { create(:donator) }
 
   describe "#total_donations(fundraiser: nil)" do
-    let(:fundraiser) { create("munificent_fundraiser") }
+    let(:fundraiser) { create(:fundraiser) }
 
     before do
-      create("munificent_donation",
+      create(:donation,
         donator:,
         amount: Money.new(10_00, "USD"),
       )
-      create("munificent_donation",
+      create(:donation,
         donator:,
         amount: Money.new(10_00, "GBP"),
       )
-      create("munificent_donation",
+      create(:donation,
         donator:,
         amount: Money.new(10_00, "EUR"),
         fundraiser:,
@@ -119,7 +119,7 @@ RSpec.describe Munificent::Donator do
 
     context "with a provider uid that already exists" do
       before do
-        create("munificent_donator", twitch_id: provider_uid)
+        create(:donator, twitch_id: provider_uid)
       end
 
       it "raises an error" do
@@ -131,7 +131,7 @@ RSpec.describe Munificent::Donator do
   describe "#display_name(donator:)" do
     subject(:result) { donator.display_name(current_donator:) }
 
-    let(:donator) { create("munificent_donator", name:, chosen_name:) }
+    let(:donator) { create(:donator, name:, chosen_name:) }
     let(:current_donator) { nil }
 
     context "if the donator is anonymous" do
@@ -191,7 +191,7 @@ RSpec.describe Munificent::Donator do
   end
 
   describe ".confirm" do
-    subject(:donator) { create("munificent_donator", email_address:, unconfirmed_email_address:, confirmed:) }
+    subject(:donator) { create(:donator, email_address:, unconfirmed_email_address:, confirmed:) }
 
     let(:new_email_address) { "new-test@example.com" }
 

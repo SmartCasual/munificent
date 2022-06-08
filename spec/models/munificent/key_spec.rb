@@ -2,13 +2,13 @@ RSpec.describe Munificent::Key do
   describe "after creation" do
     it "instructs the key assigner to recheck the database backlog" do
       allow(Munificent::KeyAssignment::RequestProcessor).to receive(:recheck_database)
-      create("munificent_key")
+      create(:key)
       expect(Munificent::KeyAssignment::RequestProcessor).to have_received(:recheck_database)
     end
   end
 
   describe "#code" do
-    subject(:game_key) { create("munificent_key", code: plaintext) }
+    subject(:game_key) { create(:key, code: plaintext) }
 
     let(:plaintext) { SecureRandom.uuid }
 

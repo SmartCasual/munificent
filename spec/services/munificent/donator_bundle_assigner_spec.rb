@@ -4,8 +4,8 @@ RSpec.describe Munificent::DonatorBundleAssigner do
       described_class.assign(donator:, bundle:, fund:)
     end
 
-    let(:donator) { create("munificent_donator") }
-    let(:bundle) { create("munificent_bundle", bundle_tiers:) }
+    let(:donator) { create(:donator) }
+    let(:bundle) { create(:bundle, bundle_tiers:) }
     let(:fund) { nil }
 
     let(:bundle_tiers) do

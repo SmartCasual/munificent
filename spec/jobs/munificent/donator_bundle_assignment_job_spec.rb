@@ -2,11 +2,11 @@ RSpec.describe Munificent::DonatorBundleAssignmentJob do
   describe "#perform" do
     subject(:perform) { described_class.new.perform(donator_id) }
 
-    let(:inactive_fundraiser) { create("munificent_fundraiser", :inactive) }
-    let(:active_fundraiser) { create("munificent_fundraiser", :active) }
-    let(:closed_fundraiser) { create("munificent_fundraiser", :active, starts_at: 2.weeks.from_now) }
+    let(:inactive_fundraiser) { create(:fundraiser, :inactive) }
+    let(:active_fundraiser) { create(:fundraiser, :active) }
+    let(:closed_fundraiser) { create(:fundraiser, :active, starts_at: 2.weeks.from_now) }
 
-    let(:donator) { create("munificent_donator") }
+    let(:donator) { create(:donator) }
     let(:donator_id) { donator.id }
 
     before do
@@ -15,8 +15,8 @@ RSpec.describe Munificent::DonatorBundleAssignmentJob do
         active_fundraiser,
         closed_fundraiser,
       ].each do |fundraiser|
-        create("munificent_bundle", :live, price: Money.new(10_00, "GBP"), fundraiser:)
-        create("munificent_donation", amount: Money.new(10_00, "GBP"), donator:, fundraiser:)
+        create(:bundle, :live, price: Money.new(10_00, "GBP"), fundraiser:)
+        create(:donation, amount: Money.new(10_00, "GBP"), donator:, fundraiser:)
       end
 
       allow(Munificent::DonatorBundleAssigner).to receive(:assign).once.and_call_original

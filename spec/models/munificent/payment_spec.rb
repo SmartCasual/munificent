@@ -4,7 +4,7 @@ RSpec.describe Munificent::Payment do
       let(:stripe_payment_intent_id) { SecureRandom.uuid }
 
       context "when a payment already exists with that Stripe ID" do
-        let!(:existing_payment) { create("munificent_payment", stripe_payment_intent_id:) }
+        let!(:existing_payment) { create(:payment, stripe_payment_intent_id:) }
 
         it "runs the assignment job on the existing payment" do
           described_class.create_and_assign(
@@ -17,7 +17,7 @@ RSpec.describe Munificent::Payment do
       end
 
       context "when a payment already exists with a different Stripe ID" do
-        let!(:existing_payment) { create("munificent_payment", stripe_payment_intent_id: "pi_#{SecureRandom.uuid}") }
+        let!(:existing_payment) { create(:payment, stripe_payment_intent_id: "pi_#{SecureRandom.uuid}") }
 
         it "runs the assignment job on a new payment" do
           described_class.create_and_assign(
@@ -35,7 +35,7 @@ RSpec.describe Munificent::Payment do
       let(:paypal_order_id) { SecureRandom.uuid }
 
       context "when a payment already exists with that PayPal ID" do
-        let!(:existing_payment) { create("munificent_payment", paypal_order_id:) }
+        let!(:existing_payment) { create(:payment, paypal_order_id:) }
 
         it "runs the assignment job on the existing payment" do
           described_class.create_and_assign(
@@ -48,7 +48,7 @@ RSpec.describe Munificent::Payment do
       end
 
       context "when a payment already exists with a different PayPal ID" do
-        let!(:existing_payment) { create("munificent_payment", paypal_order_id: "PAY-1AB23456CD789012EF34GHIJ") }
+        let!(:existing_payment) { create(:payment, paypal_order_id: "PAY-1AB23456CD789012EF34GHIJ") }
 
         it "runs the assignment job on a new payment" do
           described_class.create_and_assign(

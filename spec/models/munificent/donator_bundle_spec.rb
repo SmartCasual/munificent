@@ -1,5 +1,5 @@
 RSpec.describe Munificent::DonatorBundle, type: :model do
-  let(:bundle) { create("munificent_bundle", bundle_tiers:) }
+  let(:bundle) { create(:bundle, bundle_tiers:) }
 
   let(:top_tier_price) { Money.new(20_00, "GBP") }
   let(:middle_tier_price) { Money.new(10_00, "GBP") }
@@ -13,7 +13,7 @@ RSpec.describe Munificent::DonatorBundle, type: :model do
     ]
   end
 
-  let(:donator) { create("munificent_donator") }
+  let(:donator) { create(:donator) }
 
   let(:donator_bundle) do
     described_class.create_from(bundle, donator:)

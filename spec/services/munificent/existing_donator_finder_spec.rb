@@ -1,19 +1,19 @@
 RSpec.describe Munificent::ExistingDonatorFinder do
   describe ".find(current_donator:, email_address:)" do
     let!(:unconfirmed_amy) do
-      create("munificent_donator", unconfirmed_email_address: "amy@example.com")
+      create(:donator, unconfirmed_email_address: "amy@example.com")
     end
 
     let!(:confirmed_amy) do
-      create("munificent_donator", :confirmed, email_address: "amy@example.com")
+      create(:donator, :confirmed, email_address: "amy@example.com")
     end
 
     let!(:unconfirmed_brian) do
-      create("munificent_donator", unconfirmed_email_address: "brian@example.com")
+      create(:donator, unconfirmed_email_address: "brian@example.com")
     end
 
     let!(:confirmed_catherine) do
-      create("munificent_donator", :confirmed, email_address: "catherine@example.com")
+      create(:donator, :confirmed, email_address: "catherine@example.com")
     end
 
     let(:new_donator) { build("munificent_donator") }

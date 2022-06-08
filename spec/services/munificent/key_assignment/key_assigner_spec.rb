@@ -3,9 +3,9 @@ RSpec.describe Munificent::KeyAssignment::KeyAssigner do
 
   let(:key_manager) { instance_double(Munificent::KeyAssignment::KeyManager) }
 
-  let(:donator) { create("munificent_donator") }
-  let(:donator_bundle) { create("munificent_donator_bundle", donator:) }
-  let(:donator_bundle_tier) { create("munificent_donator_bundle_tier", donator_bundle:, unlocked: true) }
+  let(:donator) { create(:donator) }
+  let(:donator_bundle) { create(:donator_bundle, donator:) }
+  let(:donator_bundle_tier) { create(:donator_bundle_tier, donator_bundle:, unlocked: true) }
 
   let(:game) { donator_bundle_tier.bundle_tier.games.first }
 
@@ -17,7 +17,7 @@ RSpec.describe Munificent::KeyAssignment::KeyAssigner do
   end
 
   context "when it gets a lock on an unassigned key" do
-    let(:key) { create("munificent_key", game:) }
+    let(:key) { create(:key, game:) }
 
     before do
       allow(key_manager).to receive(:lock_unassigned_key)

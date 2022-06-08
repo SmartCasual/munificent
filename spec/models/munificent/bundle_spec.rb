@@ -9,7 +9,7 @@ RSpec.describe Munificent::Bundle, type: :model do
   end
 
   let(:attrs) { {} }
-  let(:fundraiser) { create("munificent_fundraiser", main_currency: "GBP") }
+  let(:fundraiser) { create(:fundraiser, main_currency: "GBP") }
 
   describe "state machine" do
     it { is_expected.to have_state(:draft) }
@@ -27,8 +27,8 @@ RSpec.describe Munificent::Bundle, type: :model do
     context "if there's tiers" do
       let(:attrs) { { bundle_tiers: [lowest_tier, highest_tier] } }
 
-      let(:lowest_tier) { create("munificent_bundle_tier", price: Money.new(1_00, "GBP")) }
-      let(:highest_tier) { create("munificent_bundle_tier", price: Money.new(10_00, "GBP")) }
+      let(:lowest_tier) { create(:bundle_tier, price: Money.new(1_00, "GBP")) }
+      let(:highest_tier) { create(:bundle_tier, price: Money.new(10_00, "GBP")) }
 
       it "returns the highest tier" do
         expect(bundle.highest_tier).to eq(highest_tier)
@@ -46,8 +46,8 @@ RSpec.describe Munificent::Bundle, type: :model do
     context "if there's tiers" do
       let(:attrs) { { bundle_tiers: [lowest_tier, highest_tier] } }
 
-      let(:lowest_tier) { create("munificent_bundle_tier", price: Money.new(1_00, "GBP")) }
-      let(:highest_tier) { create("munificent_bundle_tier", price: Money.new(10_00, "GBP")) }
+      let(:lowest_tier) { create(:bundle_tier, price: Money.new(1_00, "GBP")) }
+      let(:highest_tier) { create(:bundle_tier, price: Money.new(10_00, "GBP")) }
 
       it "returns the lowest tier" do
         expect(bundle.lowest_tier).to eq(lowest_tier)

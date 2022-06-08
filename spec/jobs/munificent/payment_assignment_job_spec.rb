@@ -4,18 +4,18 @@ RSpec.describe Munificent::PaymentAssignmentJob, queue_type: :test do
   let(:stripe_payment_intent_id) { "pi_#{SecureRandom.uuid}" }
 
   let(:payment) do
-    create("munificent_payment",
+    create(:payment,
       stripe_payment_intent_id:,
     )
   end
   let!(:donation) do
-    create("munificent_donation",
+    create(:donation,
       stripe_payment_intent_id:,
       donator:,
     )
   end
 
-  let(:donator) { create("munificent_donator") }
+  let(:donator) { create(:donator) }
 
   let(:payment_id) { payment.id }
 
