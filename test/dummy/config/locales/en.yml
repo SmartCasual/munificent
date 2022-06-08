@@ -1,0 +1,15 @@
+en:
+  # Validation error overrides.  See this table ("message" column):
+  # https://guides.rubyonrails.org/i18n.html#error-message-interpolation
+  activerecord:
+    errors:
+      models:
+        munificent/donator:
+          attributes:
+            twitch_id:
+              taken: "ID is taken"
+
+  common:
+    abstract:
+      anonymous: Anonymous
+      you: You

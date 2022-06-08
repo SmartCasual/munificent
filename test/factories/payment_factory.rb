@@ -1,0 +1,1 @@
+Munificent::Factories.define :payment

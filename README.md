@@ -15,7 +15,7 @@ We recommend the use of [rbenv](https://github.com/rbenv/rbenv) and [nvm](https:
 
 #### Using rbenv and bundler
 
-Run the following commands in the jingle-jam directory.
+Run the following commands in the munificent directory.
 
     rbenv install
     gem install bundler
@@ -46,7 +46,6 @@ You can set up environment variables however you like. An easy way to do it is t
 
 The vars you need to set are:
 
-    FROM_EMAIL_ADDRESS=jinglejam@example.com
     HMAC_SECRET=some_very_secret_text_here
 
 If you use [direnv](https://direnv.net/) then you can copy `./docs/.envrc.example` to `./.envrc` and replace the `placeholder` text where needed.

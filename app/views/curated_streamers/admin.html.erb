@@ -1,7 +1,0 @@
-<h1><%= t("donations.admin.streamer.header", streamer: @streamer.twitch_username) %></h1>
-
-<h2><%= t("donations.viewer_donations.header") %></h2>
-<%= render "donations/list", donations: @streamer.donations %>
-
-<h2><%= t("donations.total.header") %></h2>
-<p><%= @streamer.donations.each_with_object(Money.new(0)) { |d, sum| sum + d.amount }.format %></p>

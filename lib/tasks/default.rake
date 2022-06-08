@@ -21,7 +21,6 @@ task lint: :rubocop
 desc "Test"
 task :test do
   Rake::Task["spec"].invoke
-  Rake::Task["cucumber"].invoke
 end
 
 desc "Build"

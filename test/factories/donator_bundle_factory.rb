@@ -1,6 +1,4 @@
-FactoryBot.define do
-  factory :donator_bundle do
-    bundle
-    donator
-  end
+Munificent::Factories.define :donator_bundle do
+  bundle
+  donator
 end

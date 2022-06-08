@@ -1,28 +1,26 @@
 require_relative "../support/aasm_factories"
 
-FactoryBot.define do
-  factory :donation do
-    donator
-    amount { Money.new(25_000) }
-    message { "Some standard message" }
-    stripe_payment_intent_id { "stripe_payment_intent_id" }
+Munificent::Factories.define :donation do
+  donator
+  amount { Money.new(25_000) }
+  message { "Some standard message" }
+  sequence(:stripe_payment_intent_id) { |n| "stripe_payment_intent_id_#{n}" }
 
-    fundraiser { Fundraiser.active.first || association(:fundraiser, :active) }
+  fundraiser { Munificent::Fundraiser.active.first || association(:fundraiser, :active) }
 
-    transient do
-      charity_split { {} }
-    end
+  transient do
+    charity_split { {} }
+  end
 
-    AASMFactories.init(self, Donation)
+  AASMFactories.init(self, @definition)
 
-    after(:build) do |donation, evaluator|
-      evaluator.charity_split.each do |charity, split_amount|
-        donation.charity_splits.build(
-          donation:,
-          charity:,
-          amount: split_amount,
-        )
-      end
+  after(:build) do |donation, evaluator|
+    evaluator.charity_split.each do |charity, split_amount|
+      donation.charity_splits.build(
+        donation:,
+        charity:,
+        amount: split_amount,
+      )
     end
   end
 end
