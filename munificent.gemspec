@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email       = ["elliot@smart-casual.com"]
   spec.homepage    = "https://github.com/SmartCasual/munificent"
   spec.summary     = "The core of Munificent, a game-bundle fundraising platform."
-  spec.license     = "CC BY-NC-SA 4.0"
+  spec.license     = "CC-BY-NC-SA-4.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
