@@ -1,10 +1,6 @@
-require "aasm"
-
 module Munificent
   class ApplicationRecord < ActiveRecord::Base
     self.abstract_class = true
-
-    include AASM
 
     scope :where_money, -> (monies) {
       conditions = monies.each_with_object({}) { |(field_prefix, money), hash|

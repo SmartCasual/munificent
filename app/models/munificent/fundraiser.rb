@@ -11,6 +11,8 @@ module Munificent
       PRO_SE = "pro_se".freeze,
     ].freeze
 
+    require "aasm"
+    include AASM
     aasm column: :state do
       state :inactive, initial: true
       state :active

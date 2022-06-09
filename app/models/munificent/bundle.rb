@@ -15,6 +15,8 @@ module Munificent
       end
     end
 
+    require "aasm"
+    include AASM
     aasm column: :state do
       state :draft, initial: true
       state :live

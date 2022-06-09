@@ -20,6 +20,8 @@ module Munificent
 
     validates :amount, presence: true, "munificent/donation_amount": true
 
+    require "aasm"
+    include AASM
     aasm column: :state do
       state :pending, initial: true
       state :cancelled
