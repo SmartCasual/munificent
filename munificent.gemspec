@@ -17,7 +17,15 @@ Gem::Specification.new do |spec|
   spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) {
-    Dir["{app,config,db,lib}/**/*", "LICENCE", "Rakefile", "README.md"]
+    Dir[
+      "{app,config,db,lib}/**/*",
+      "LICENCE",
+      "Rakefile",
+      "README.md",
+      "munificent.gemspec",
+      "test/factories/**/*_factory.rb",
+      "test/support/aasm_factories.rb",
+    ]
   }
 
   spec.add_dependency "aasm", "~> 5.2"
